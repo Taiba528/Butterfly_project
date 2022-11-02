@@ -4,6 +4,13 @@ from PIL import Image
 
 image = Image.open('Indegene_Logo.png')
 st.sidebar.image(image, width=200, clamp=False, channels="grey", output_format="auto")
+st.sidebar.markdown('''
+•	Criteria 2,3 and 4 if present more than once in abstract- All 3 criteria should be present- considered as - High relevancy
+•	Criteria 2,3 and 4 if present only once in Title All 3 criteria should be present- considered as - High relevancy
+•	Criteria 2,3 and 4 if present only once in abstract- All 3 criteria should be present- considered as – Medium relevancy
+•	Criteria 2,3 and 4 - Presence of keywords- irrespective once or more than once. Considered as - medium relevancy
+•	Criteria 2,3 and 5 if present more than once or once in abstract or title- All 3 criteria should be present- considered as - medium relevancy Criteria 5  (only these keyword)- Point-Of-Care Ultrasonography, POCUS, Pocket ultrasound, POCUS, Point of care ultrasound, Point-of-care ultrasound, Point Of Care Ultrasonography in addition to "Lung/lung"
+''')
 
 
 header=st.container()
