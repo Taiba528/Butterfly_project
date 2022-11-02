@@ -5,26 +5,6 @@ from PIL import Image
 image = Image.open('Indegene_Logo.png')
 st.sidebar.image(image, width=200, clamp=False, channels="grey", output_format="auto")
 
-with st.sidebar.expander("Business condition"):
-    st.sidebar.write('''
-    •	Criteria 2,3 and 4 if present more than once in abstract- All 3 criteria should be present- considered as - High relevancy
-    •	Criteria 2,3 and 4 if present only once in Title All 3 criteria should be present- considered as - High relevancy
-    •	Criteria 2,3 and 4 if present only once in abstract- All 3 criteria should be present- considered as – Medium relevancy
-    •	Criteria 2,3 and 4 - Presence of keywords- irrespective once or more than once. Considered as - medium relevancy
-    •	Criteria 2,3 and 5 if present more than once or once in abstract or title- All 3 criteria should be present- considered as - medium relevancy 
-    Criteria 5  (only these keyword)- Point-Of-Care Ultrasonography, POCUS, Pocket ultrasound, POCUS, Point of care ultrasound, Point-of-care ultrasound, 
-    Point Of Care Ultrasonography in addition to "Lung/lung"
-    l3=[("Point-Of-Care Ultrasonography","POCUS","Pocket ultrasound",
-                                                  "Point of care ultrasound","Point-of-care ultrasound",
-                                                  "Point Of Care Ultrasonography")]
-    l4=["Focused lung ultrasonography in dyspnea","Lung & Cardiac Ultrasound",
-                                                  "Lung and Cardiac Ultrasound","Lung and Cardiac Ultrasound (LuCUS)",
-                                                  "Lung ultrasonograph","Lung ultrasonography","Lung ultrasound",
-                                                  "Lung-cardiac-inferior vena cava (LCI) integrated ultrasound","LUS"]
-
-    ''')
-
-
 header=st.container()
 dataset=st.container()
 features=st.container()
@@ -434,6 +414,24 @@ df['crt5_count_A']=l2a_crt5_flag
 st.write(df.head())
 
 st.header("Define your Business Rule")
+with st.expander("Business condition"):
+    st.write('''
+    •	Criteria 2,3 and 4 if present more than once in abstract- All 3 criteria should be present- considered as - High relevancy
+    •	Criteria 2,3 and 4 if present only once in Title All 3 criteria should be present- considered as - High relevancy
+    •	Criteria 2,3 and 4 if present only once in abstract- All 3 criteria should be present- considered as – Medium relevancy
+    •	Criteria 2,3 and 4 - Presence of keywords- irrespective once or more than once. Considered as - medium relevancy
+    •	Criteria 2,3 and 5 if present more than once or once in abstract or title- All 3 criteria should be present- considered as - medium relevancy 
+    Criteria 5  (only these keyword)- Point-Of-Care Ultrasonography, POCUS, Pocket ultrasound, POCUS, Point of care ultrasound, Point-of-care ultrasound, 
+    Point Of Care Ultrasonography in addition to "Lung/lung"
+    l3=[("Point-Of-Care Ultrasonography","POCUS","Pocket ultrasound",
+                                                  "Point of care ultrasound","Point-of-care ultrasound",
+                                                  "Point Of Care Ultrasonography")]
+    l4=["Focused lung ultrasonography in dyspnea","Lung & Cardiac Ultrasound",
+                                                  "Lung and Cardiac Ultrasound","Lung and Cardiac Ultrasound (LuCUS)",
+                                                  "Lung ultrasonograph","Lung ultrasonography","Lung ultrasound",
+                                                  "Lung-cardiac-inferior vena cava (LCI) integrated ultrasound","LUS"]
+
+    ''')
 
 v1=st.number_input('Define a number for crt_word_count in title',min_value=1, max_value=2,step=1)
 
