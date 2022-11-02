@@ -23,6 +23,9 @@ if file1 is not None:
     df1= pd.read_excel(file1)
     df=df1[['PMID','Title','Abstractt_Text']]
     st.write(df.head()) 
+else:
+    st.stop()
+    
 
 
 st.header('Title')
@@ -46,6 +49,8 @@ if file1 is not None:
         crt1=list(data.iloc[:,0])
         #st.write('crt_1_keywords')
         #st.write(crt1)
+else:
+    st.stop()    
 
 
 words_crt1=[]
@@ -119,7 +124,9 @@ if file2 is not None:
         crt2=list(data.iloc[:,0])
         #st.write('crt_2_keywords')
         #st.write(crt2)
-
+else:
+    st.stop()
+    
 words_crt2=[]
 for j in range(len(crt2)):
         if len(crt2[j])<7:
@@ -191,7 +198,8 @@ if file3 is not None:
         crt3=list(data.iloc[:,0])
         #st.write('crt_3_keywords')
         #st.write(crt3)
-
+else:
+    st.stop()
 
 words_crt3=[]
 for j in range(len(crt3)):
@@ -264,7 +272,8 @@ if file4 is not None:
         crt4=list(data.iloc[:,0])
         #st.write('crt4_keywords')
         #st.write(crt4)
-
+else:
+    st.stop()
 
 words_crt4=[]
 for j in range(len(crt4)):
@@ -337,7 +346,8 @@ if file5 is not None:
         crt5=list(data.iloc[:,0])
         #st.write('crt5_keywords')
         #st.write(crt5)
-
+else:
+    st.stop()
 
 words_crt5=[]
 for j in range(len(crt5)):
