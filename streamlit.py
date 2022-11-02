@@ -5,8 +5,8 @@ from PIL import Image
 image = Image.open('Indegene_Logo.png')
 st.sidebar.image(image, width=200, clamp=False, channels="grey", output_format="auto")
 
-st.sidebar.title("Business condition")
-st.sidebar.markdown('''
+st.sidebar.expander("Business condition")
+st.sidebar.write('''
 •	Criteria 2,3 and 4 if present more than once in abstract- All 3 criteria should be present- considered as - High relevancy
 •	Criteria 2,3 and 4 if present only once in Title All 3 criteria should be present- considered as - High relevancy
 •	Criteria 2,3 and 4 if present only once in abstract- All 3 criteria should be present- considered as – Medium relevancy
