@@ -3,7 +3,8 @@ import pandas as pd
 
 header=st.container()
 with header:
-    st.title('Welcome')
+    st.title('Butterfly App')
+    st.markdown("Objective:To get the most Relevant publications with respect to some pre-defined Keywords and Business conditions")
 
 from PIL import Image
 
@@ -14,7 +15,7 @@ st.sidebar.image(image, width=200, clamp=False, channels="RGB", output_format="a
 
 #adding a file uploader
 st.header('Publication list')
-file1 = st.file_uploader("Please choose publication list",type=["xlsx"])
+file1 = st.file_uploader("Please upload your publication list here",type=["xlsx"])
 
 if file1 is not None:
     df1= pd.read_excel(file1)
@@ -99,7 +100,7 @@ def check_relevancy(crt):
        
     
 
-files= st.file_uploader("Please choose Keywords_Criteria_lists",accept_multiple_files=True,type=["xlsx"])
+files= st.file_uploader("Please upload Keywords_Criteria_lists here",accept_multiple_files=True,type=["xlsx"])
 for i in range((len(files))):
     if files[i] is not None:
         data= pd.read_excel(files[i])
@@ -135,7 +136,7 @@ with st.expander("Business Condition"):
                                               "Lung-cardiac-inferior vena cava (LCI) integrated ultrasound","LUS")
    
 
-
+v5=st.multiselect('Select your criteria to consider',df.columns)  
 v1=st.number_input('Define a number for crt_word_count in title',min_value=1,step=1)
 
 v2=st.number_input('Define a number for crt_word_count in abstract',min_value=1,step=1)
@@ -150,7 +151,7 @@ l5=['crt_count_T_1','crt_count_T_2','crt_count_T_3',"crt_count_T_4",'crt_count_T
 
 v3=st.text_input('Define Criteria 5 keywords to check',l3)  
 v4=st.text_input('Define the specific word to check',l4)   
-v5=st.multiselect('Select your first criteria',df.columns)  
+#v5=st.multiselect('Select your first criteria',df.columns)  
 #v5=st.multiselect('Select your seccond criteria',l5)                                        
 Relevancy=[]
 for i in range(len(df["PMID"])):
