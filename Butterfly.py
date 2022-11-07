@@ -117,8 +117,10 @@ for i in range((len(files))):
     df['crt_words_A_'+str(i+1)]=a[2]
     df['crt_count_A_'+str(i+1)]=a[3]  
 
-st.header("Preprocessed Dataset")     
-st.write(df)    
+#st.header("Preprocessed Dataset")   
+with st.expander("Preprocessed Dataset"):
+    st.write(df)
+  
 
 
 st.header("Define your Business Rule")
