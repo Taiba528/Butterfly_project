@@ -24,13 +24,15 @@ if file1 is not None:
 else:
     st.stop()    
 
-st.header('Title')
+#st.header('Title')
 Title=df1["Title"]
-Title
+with st.expander("Title"):
+    st.write(Title)
 
-st.header('Abstract')
+#st.header('Abstract')
 Abstract=df1["Abstractt_Text"]
-Abstract
+with st.expander("Abstract"):
+    st.write(Abstract)
 
 def check_relevancy(crt):
     words_crt=[]
@@ -109,7 +111,7 @@ for i in range((len(files))):
         a=check_relevancy(crt)
         with st.expander('crt_keywords_'+str(i+1)):
             st.write(crt)
-        
+                
     df['crt_words_T_'+str(i+1)]=a[0]
     df['crt_count_T_'+str(i+1)]=a[1]
     df['crt_words_A_'+str(i+1)]=a[2]
@@ -140,12 +142,16 @@ v5=st.multiselect('Select your criteria to consider',df.columns)
 v1=st.number_input('Define a number for crt_word_count in title',min_value=1,step=1)
 
 v2=st.number_input('Define a number for crt_word_count in abstract',min_value=1,step=1)
-l3=(("Point-Of-Care Ultrasonography","POCUS","Pocket ultrasound",
-                                              "Point of care ultrasound","Point-of-care ultrasound","Point Of Care Ultrasonography"))
-l4=(("Lung Keywords : Focused lung ultrasonography in dyspnea","Lung & Cardiac Ultrasound",
-                                              "Lung and Cardiac Ultrasound","Lung and Cardiac Ultrasound (LuCUS)",
-                                              "Lung ultrasonograph","Lung ultrasonography","Lung ultrasound",
-                                              "Lung-cardiac-inferior vena cava (LCI) integrated ultrasound","LUS"))
+l3= pd.read_excel(files[3])
+l4= pd.read_excel(files[4])
+#crt=list(data.iloc[:,0])
+        
+#l3=(("Point-Of-Care Ultrasonography","POCUS","Pocket ultrasound",
+                                              #"Point of care ultrasound","Point-of-care ultrasound","Point Of Care Ultrasonography"))
+#l4=(("Lung Keywords : Focused lung ultrasonography in dyspnea","Lung & Cardiac Ultrasound",
+                                              #"Lung and Cardiac Ultrasound","Lung and Cardiac Ultrasound (LuCUS)",
+                                              #"Lung ultrasonograph","Lung ultrasonography","Lung ultrasound",
+                                              #"Lung-cardiac-inferior vena cava (LCI) integrated ultrasound","LUS"))
 
 l5=['crt_count_T_1','crt_count_T_2','crt_count_T_3',"crt_count_T_4",'crt_count_T_5','crt_count_A_1',"crt_count_A_2","crt_count_A_3","crt_count_A_4","crt_count_A_5","crt_words_A_5"]
 
