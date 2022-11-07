@@ -140,17 +140,17 @@ v5=st.multiselect('Select your criteria to consider',df.columns)
 v1=st.number_input('Define a number for crt_word_count in title',min_value=1,step=1)
 
 v2=st.number_input('Define a number for crt_word_count in abstract',min_value=1,step=1)
-l3=["Point-Of-Care Ultrasonography","POCUS","Pocket ultrasound",
-                                              "Point of care ultrasound","Point-of-care ultrasound","Point Of Care Ultrasonography"]
-l4=["Lung Keywords : Focused lung ultrasonography in dyspnea","Lung & Cardiac Ultrasound",
+l3=(("Point-Of-Care Ultrasonography","POCUS","Pocket ultrasound",
+                                              "Point of care ultrasound","Point-of-care ultrasound","Point Of Care Ultrasonography"))
+l4=(("Lung Keywords : Focused lung ultrasonography in dyspnea","Lung & Cardiac Ultrasound",
                                               "Lung and Cardiac Ultrasound","Lung and Cardiac Ultrasound (LuCUS)",
                                               "Lung ultrasonograph","Lung ultrasonography","Lung ultrasound",
-                                              "Lung-cardiac-inferior vena cava (LCI) integrated ultrasound","LUS"]
+                                              "Lung-cardiac-inferior vena cava (LCI) integrated ultrasound","LUS"))
 
 l5=['crt_count_T_1','crt_count_T_2','crt_count_T_3',"crt_count_T_4",'crt_count_T_5','crt_count_A_1',"crt_count_A_2","crt_count_A_3","crt_count_A_4","crt_count_A_5","crt_words_A_5"]
 
-v3=st.text_input('Define Criteria 5 keywords to check',l3)  
-v4=st.text_input('Define the specific word to check',l4)   
+v3=st.multiselect('Define Criteria 5 keywords to check',l3)  
+v4=st.multiselect('Define the specific word to check',l4)   
 #v5=st.multiselect('Select your first criteria',df.columns)  
 #v5=st.multiselect('Select your seccond criteria',l5)                                        
 Relevancy=[]
@@ -168,7 +168,7 @@ for i in range(len(df["PMID"])):
         Relevancy.append("Medium")
     elif df[v5[3]][i]>=v1 and df[v5[4]][i]>=v1 and df[v5[5]][i]==v1:
         Relevancy.append("Medium")  
-    elif df[v5[3]][i]>=v1 and df[v5[4]][i]>=v1 and df[v5[6]][i] == v3 and df[v5[7]][i] ==v4:
+    elif df[v5[3]][i]>=v1 and df[v5[4]][i]>=v1 and (df[v5[6]][i] in v3 or df[v5[7]][i] in v3) and df[v5[7]][i] in v4:
         Relevancy.append("Medium")    
     else:
         Relevancy.append("Low")
