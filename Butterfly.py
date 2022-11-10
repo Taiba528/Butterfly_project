@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 
+
 header=st.container()
 with header:
     st.title('Butterfly App')
@@ -14,6 +15,7 @@ st.sidebar.image(image, width=200, clamp=False, channels="RGB", output_format="a
    
 
 #adding a file uploader
+
 st.header('Publication list')
 file1 = st.file_uploader("Please upload your publication list here",type=["xlsx"])
 
@@ -119,8 +121,7 @@ for i in range((len(files))):
 
 #st.header("Preprocessed Dataset")   
 with st.expander("Preprocessed Dataset"):
-    st.write(df)
-  
+    st.write(df)   
 
 
 st.header("Define your Business Rule")
@@ -139,13 +140,15 @@ with st.expander("Business Condition"):
                                               "Lung ultrasonograph","Lung ultrasonography","Lung ultrasound",
                                               "Lung-cardiac-inferior vena cava (LCI) integrated ultrasound","LUS")
    
+with st.form(key='my_form'):
 
-v5=st.multiselect('Select your criteria to consider',df.columns)  
-v1=st.number_input('Define a number for crt_word_count in title',min_value=1,step=1)
+    v5=st.multiselect('Select your criteria to consider',df.columns)  
+    v1=st.number_input('Define a number for crt_word_count in title',min_value=1,step=1)
 
-v2=st.number_input('Define a number for crt_word_count in abstract',min_value=1,step=1)
-l3= pd.read_excel(files[3])
-l4= pd.read_excel(files[4])
+    v2=st.number_input('Define a number for crt_word_count in abstract',min_value=1,step=1)
+    l3= pd.read_excel(files[3])
+    l4= pd.read_excel(files[4])
+
 #crt=list(data.iloc[:,0])
         
 #l3=(("Point-Of-Care Ultrasonography","POCUS","Pocket ultrasound",
@@ -155,10 +158,11 @@ l4= pd.read_excel(files[4])
                                               #"Lung ultrasonograph","Lung ultrasonography","Lung ultrasound",
                                               #"Lung-cardiac-inferior vena cava (LCI) integrated ultrasound","LUS"))
 
-l5=['crt_count_T_1','crt_count_T_2','crt_count_T_3',"crt_count_T_4",'crt_count_T_5','crt_count_A_1',"crt_count_A_2","crt_count_A_3","crt_count_A_4","crt_count_A_5","crt_words_A_5"]
+    l5=['crt_count_T_1','crt_count_T_2','crt_count_T_3',"crt_count_T_4",'crt_count_T_5','crt_count_A_1',"crt_count_A_2","crt_count_A_3","crt_count_A_4","crt_count_A_5","crt_words_A_5"]
 
-v3=st.multiselect('Define Criteria 5 keywords to check',l3)  
-v4=st.multiselect('Define the specific word to check',l4)   
+    v3=st.multiselect('Define Criteria 5 keywords to check',l4)  
+    v4=st.multiselect('Define the specific word to check',l3) 
+    submit_button = st.form_submit_button(label='Submit')  
 #v5=st.multiselect('Select your first criteria',df.columns)  
 #v5=st.multiselect('Select your seccond criteria',l5)                                        
 Relevancy=[]
@@ -199,46 +203,61 @@ for i in range(len(df["PMID"])):
 df['Indication']=Indication   
 
 st.write(df)
-st.write('Total publications',len(df))
+
+col1, col2 = st.columns(2)
+
 
 @st.experimental_memo
 def convert_df(df):
    return df.to_csv(index=False).encode('utf-8')
 
-csv = convert_df(df)
-st.download_button(
-   "Press to Download Total Publication list",
-   csv,
-   "Total Publication list.csv",
-   "text/csv",
-   key='download-csv'
-)
-        
+with col1:
+    #st.markdown((Total publications,len(df)), unsafe_allow_html=True)
+    st.write('Total publications',len(df))   
 
-df_High=df.loc[df['Relevancy']=="High"]
-st.write(df_High)
-st.write('High relevancy publications',len(df_High))
+with col2:   
 
-csv = convert_df(df_High)
-st.download_button(
-   "Press to Download High RelevancyPublication list",
-   csv,
-   "High Relevancy Publication list.csv",
-   "text/csv",
-   key='download-csv-High'
-)
+    csv = convert_df(df)
+    st.download_button(
+       "Download Total Publication list",
+       csv,
+       "Total Publication list.csv",
+       "text/csv",
+       key='download-csv'
+    )
+            
+with col1:
+    df_High=df.loc[df['Relevancy']=="High"]
+    #st.write(df_High)
+    st.write('High relevancy publications',len(df_High))
+
+with col2:     
+
+    csv = convert_df(df_High)
+    st.download_button(
+       "Download High RelevancyPublication list",
+       csv,
+       "High Relevancy Publication list.csv",
+       "text/csv",
+       key='download-csv-High'
+    )
 
 
+with col1:
+    df_Medium=df.loc[df['Relevancy']=="Medium"]
+    #st.write(df_Medium)
+    st.write('Medium relevancy publications',len(df_Medium))
+    csv = convert_df(df_Medium)
+    
+   
 
-df_Medium=df.loc[df['Relevancy']=="Medium"]
-st.write(df_Medium)
-st.write('Medium relevancy publications',len(df_Medium))
-csv = convert_df(df_Medium)
+with col2:
 
-st.download_button(
-   "Press to Download Medium Relevancy Publication list",
-   csv,
-   "Medium Relevancy Publication list.csv",
-   "text/csv",
-   key='download-csv-Medium'
-)
+
+    st.download_button(
+       "Download Medium Relevancy Publication list",
+       csv,
+       "Medium Relevancy Publication list.csv",
+       "text/csv",
+       key='download-csv-Medium'
+    )
