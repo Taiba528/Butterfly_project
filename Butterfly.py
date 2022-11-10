@@ -164,101 +164,103 @@ with st.form(key='my_form'):
     v4=st.multiselect('Define the specific word to check',l3) 
     submit_button = st.form_submit_button(label='Submit')  
 #v5=st.multiselect('Select your first criteria',df.columns)  
-#v5=st.multiselect('Select your seccond criteria',l5)                                        
-Relevancy=[]
-for i in range(len(df["PMID"])):
-    if df[v5[0]][i]==v1 and df[v5[1]][i]==v1 and df[v5[2]][i]==v1:
-        Relevancy.append("High")
-    elif df[v5[3]][i]>=v2 and df[v5[4]][i]>=v2 and df[v5[5]][i]>=v2:
-        Relevancy.append("High")
-         
-    elif df[v5[3]][i]==v1 and df[v5[4]][i]==v1 and df[v5[5]][i]==v1:
-        Relevancy.append("Medium")
-    elif df[v5[3]][i]==v1 and df[v5[4]][i]>=v1 and df[v5[5]][i]>=v1:
-        Relevancy.append("Medium")
-    elif df[v5[3]][i]>=v1 and df[v5[4]][i]==v1 and df[v5[5]][i]>=v1:
-        Relevancy.append("Medium")
-    elif df[v5[3]][i]>=v1 and df[v5[4]][i]>=v1 and df[v5[5]][i]==v1:
-        Relevancy.append("Medium")  
-    elif df[v5[3]][i]>=v1 and df[v5[4]][i]>=v1 and (df[v5[6]][i] in v3 or df[v5[7]][i] in v3) and df[v5[7]][i] in v4:
-        Relevancy.append("Medium")    
-    else:
-        Relevancy.append("Low")
+#v5=st.multiselect('Select your seccond criteria',l5)   
+
+if len(df)==0:
+    Relevancy=[]
+    for i in range(len(df["PMID"])):
+        if df[v5[0]][i]==v1 and df[v5[1]][i]==v1 and df[v5[2]][i]==v1:
+            Relevancy.append("High")
+        elif df[v5[3]][i]>=v2 and df[v5[4]][i]>=v2 and df[v5[5]][i]>=v2:
+            Relevancy.append("High")
+
+        elif df[v5[3]][i]==v1 and df[v5[4]][i]==v1 and df[v5[5]][i]==v1:
+            Relevancy.append("Medium")
+        elif df[v5[3]][i]==v1 and df[v5[4]][i]>=v1 and df[v5[5]][i]>=v1:
+            Relevancy.append("Medium")
+        elif df[v5[3]][i]>=v1 and df[v5[4]][i]==v1 and df[v5[5]][i]>=v1:
+            Relevancy.append("Medium")
+        elif df[v5[3]][i]>=v1 and df[v5[4]][i]>=v1 and df[v5[5]][i]==v1:
+            Relevancy.append("Medium")  
+        elif df[v5[3]][i]>=v1 and df[v5[4]][i]>=v1 and (df[v5[6]][i] in v3 or df[v5[7]][i] in v3) and df[v5[7]][i] in v4:
+            Relevancy.append("Medium")    
+        else:
+            Relevancy.append("Low")
 
 
-df['Relevancy']=Relevancy 
+    df['Relevancy']=Relevancy 
 
 
 
-Indication=[]
-for i in range(len(df["PMID"])):
-    if df["crt_words_T_1"][i] !='NA':
-        Indication.append(df["crt_words_T_1"][i])
-    elif df["crt_count_A_1"][i]==1:
-         Indication.append(dataset["crt_words_A_1"][i])
-        
-    else:
-        Indication.append("NA")
+    Indication=[]
+    for i in range(len(df["PMID"])):
+        if df["crt_words_T_1"][i] !='NA':
+            Indication.append(df["crt_words_T_1"][i])
+        elif df["crt_count_A_1"][i]==1:
+             Indication.append(dataset["crt_words_A_1"][i])
 
-df['Indication']=Indication   
+        else:
+            Indication.append("NA")
 
-st.write(df)
+    df['Indication']=Indication   
 
-col1, col2 = st.columns(2)
+    st.write(df)
 
-
-@st.experimental_memo
-def convert_df(df):
-   return df.to_csv(index=False).encode('utf-8')
-
-with col1:
-    st.markdown('****Total Publications : {}****'.format(len(df)))
-    #st.write('Total publications',len(df))   
-
-with col2:   
-
-    csv = convert_df(df)
-    st.download_button(
-       "Download Total Publication list",
-       csv,
-       "Total Publication list.csv",
-       "text/csv",
-       key='download-csv'
-    )
-            
-with col1:
-    df_High=df.loc[df['Relevancy']=="High"]
-    #st.write(df_High)
-    #st.write('High relevancy publications',len(df_High))
-    st.markdown('****High Relevancy Publications : {}****'.format(len(df_High)))
-with col2:     
-
-    csv = convert_df(df_High)
-    st.download_button(
-       "Download High RelevancyPublication list",
-       csv,
-       "High Relevancy Publication list.csv",
-       "text/csv",
-       key='download-csv-High'
-    )
+    col1, col2 = st.columns(2)
 
 
-with col1:
-    df_Medium=df.loc[df['Relevancy']=="Medium"]
-    #st.write(df_Medium)
-    #st.write('Medium relevancy publications',len(df_Medium))
-    st.markdown('****Medium Relevancy Publications : {}****'.format(len(df_Medium)))
-    csv = convert_df(df_Medium)
-    
-   
+    @st.experimental_memo
+    def convert_df(df):
+       return df.to_csv(index=False).encode('utf-8')
 
-with col2:
+    with col1:
+        st.markdown('****Total Publications : {}****'.format(len(df)))
+        #st.write('Total publications',len(df))   
+
+    with col2:   
+
+        csv = convert_df(df)
+        st.download_button(
+           "Download Total Publication list",
+           csv,
+           "Total Publication list.csv",
+           "text/csv",
+           key='download-csv'
+        )
+
+    with col1:
+        df_High=df.loc[df['Relevancy']=="High"]
+        #st.write(df_High)
+        #st.write('High relevancy publications',len(df_High))
+        st.markdown('****High Relevancy Publications : {}****'.format(len(df_High)))
+    with col2:     
+
+        csv = convert_df(df_High)
+        st.download_button(
+           "Download High RelevancyPublication list",
+           csv,
+           "High Relevancy Publication list.csv",
+           "text/csv",
+           key='download-csv-High'
+        )
 
 
-    st.download_button(
-       "Download Medium Relevancy Publication list",
-       csv,
-       "Medium Relevancy Publication list.csv",
-       "text/csv",
-       key='download-csv-Medium'
-    )
+    with col1:
+        df_Medium=df.loc[df['Relevancy']=="Medium"]
+        #st.write(df_Medium)
+        #st.write('Medium relevancy publications',len(df_Medium))
+        st.markdown('****Medium Relevancy Publications : {}****'.format(len(df_Medium)))
+        csv = convert_df(df_Medium)
+
+
+
+    with col2:
+
+
+        st.download_button(
+           "Download Medium Relevancy Publication list",
+           csv,
+           "Medium Relevancy Publication list.csv",
+           "text/csv",
+           key='download-csv-Medium'
+        )
