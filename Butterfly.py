@@ -213,7 +213,7 @@ def convert_df(df):
 
 with col1:
     #st.markdown((Total publications,len(df)), unsafe_allow_html=True)
-    st.markdown('Total publications',len(df))   
+    st.write('Total publications',len(df))   
 
 with col2:   
 
