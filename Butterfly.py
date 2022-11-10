@@ -212,8 +212,8 @@ def convert_df(df):
    return df.to_csv(index=False).encode('utf-8')
 
 with col1:
-    #st.markdown((Total publications,len(df)), unsafe_allow_html=True)
-    st.write('Total publications',len(df))   
+    st.markdown('****Total Publications : {}****'.format(len(df)))
+    #st.write('Total publications',len(df))   
 
 with col2:   
 
@@ -229,8 +229,8 @@ with col2:
 with col1:
     df_High=df.loc[df['Relevancy']=="High"]
     #st.write(df_High)
-    st.write('High relevancy publications',len(df_High))
-
+    #st.write('High relevancy publications',len(df_High))
+    st.markdown('****High Relevancy Publications : {}****'.format(len(df_High)))
 with col2:     
 
     csv = convert_df(df_High)
@@ -246,7 +246,8 @@ with col2:
 with col1:
     df_Medium=df.loc[df['Relevancy']=="Medium"]
     #st.write(df_Medium)
-    st.write('Medium relevancy publications',len(df_Medium))
+    #st.write('Medium relevancy publications',len(df_Medium))
+    st.markdown('****Medium Relevancy Publications : {}****'.format(len(df_Medium)))
     csv = convert_df(df_Medium)
     
    
