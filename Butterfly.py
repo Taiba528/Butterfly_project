@@ -167,6 +167,8 @@ with st.form(key='my_form'):
 #v5=st.multiselect('Select your seccond criteria',l5)   
 
 if len(df)==0:
+    st.stop()
+else:    
     Relevancy=[]
     for i in range(len(df["PMID"])):
         if df[v5[0]][i]==v1 and df[v5[1]][i]==v1 and df[v5[2]][i]==v1:
