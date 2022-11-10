@@ -120,8 +120,8 @@ for i in range((len(files))):
     df['crt_count_A_'+str(i+1)]=a[3]  
 
 #st.header("Preprocessed Dataset")   
-with st.expander("Preprocessed Dataset"):
-    st.write(df)   
+#with st.expander("Preprocessed Dataset"):
+    #st.write(df)   
 
 
 st.header("Define your Business Rule")
