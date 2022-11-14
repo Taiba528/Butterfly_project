@@ -6,7 +6,7 @@ import re
 header=st.container()
 with header:
     st.title('Butterfly App')
-    st.markdown("Objective:To get the most Relevant publications with respect to some pre-defined Keywords and Business conditions")
+    st.markdown("******OBJECTIVE : To get the most Relevant publications with respect to some pre-defined Keywords and Business conditions******")
 
 from PIL import Image
 
@@ -28,21 +28,21 @@ file1 = st.file_uploader("Please upload your publication list here",type=["xlsx"
 
 if file1 is not None:
     df1= pd.read_excel(file1)
-    df=df1[['PMID','Title','Abstractt_Text']]
+    df=df1[['PMID','Title','Abstract']]
     st.write(df1.head())
 else:
     st.stop()    
 
 #st.header('Title')
 df1["Title"]=df1["Title"].apply(text_cleaning)
-Title=df1["Title"]
+Title=df1["Title"].str.lower()
 #Title_new=Title.apply(text_cleaning)
 with st.expander("Title"):
     st.write(Title)
 
 #st.header('Abstract')
-df1["Abstractt_Text"]=df1["Abstractt_Text"].apply(text_cleaning)
-Abstract=df1["Abstractt_Text"]
+df1["Abstractt_Text"]=df1["Abstract"].apply(text_cleaning)
+Abstract=df1["Abstractt_Text"].str.lower()
 with st.expander("Abstract"):
     st.write(Abstract)
 
@@ -63,7 +63,7 @@ def check_relevancy(crt):
             l1b_crt_count=0
             l1b_crt_word=[]
             for j in range(len(words_crt)):
-                if words_crt[j].lower() in Title[i].lower():
+                if words_crt[j].lower() in Title[i]:
                     l1b_crt_count= l1b_crt_count+1
                     #words_crt[j]=text_cleaning(words_crt[j])  
                     l1b_crt_word.append((words_crt[j]))
@@ -90,7 +90,7 @@ def check_relevancy(crt):
             l2b_crt_count=0
             l2b_crt_word=[]
             for j in range(len(words_crt)):
-                if words_crt[j].lower() in Abstract[i].lower():
+                if words_crt[j].lower() in Abstract[i]:
                     l2b_crt_count= l2b_crt_count+1
                     # words_crt[j]=text_cleaning(words_crt[j])    
                     l2b_crt_word.append((words_crt[j]))
@@ -108,22 +108,23 @@ def check_relevancy(crt):
     
     return (l1a_crt_word,l1a_crt_flag, l2a_crt_word, l2a_crt_flag)    
        
-    
-
 files= st.file_uploader("Please upload Keywords_Criteria_lists here",accept_multiple_files=True,type=["xlsx"])
-for i in range((len(files))):
-    if files[i] is not None:
-        data= pd.read_excel(files[i])
-        crt=list(data.iloc[:,0])
-        #st.write('crt_keywords_',i+1)
-        a=check_relevancy(crt)
-        with st.expander('crt_keywords_'+str(i+1)):
-            st.write(crt)
-                
-    df['crt_words_T_'+str(i+1)]=a[0]
-    df['crt_count_T_'+str(i+1)]=a[1]
-    df['crt_words_A_'+str(i+1)]=a[2]
-    df['crt_count_A_'+str(i+1)]=a[3]  
+if len(files)==0:
+        st.stop()   
+else:
+        for i in range((len(files))):
+            if files[i] is not None:
+                data= pd.read_excel(files[i])
+                crt=list(data.iloc[:,0])
+                #st.write('crt_keywords_',i+1)
+                a=check_relevancy(crt)
+                with st.expander('crt_keywords_'+str(i+1)):
+                    st.write(crt)
+                        
+            df['crt_words_T_'+str(i+1)]=a[0]
+            df['crt_count_T_'+str(i+1)]=a[1]
+            df['crt_words_A_'+str(i+1)]=a[2]
+            df['crt_count_A_'+str(i+1)]=a[3]  
 
 
 
@@ -132,24 +133,25 @@ for i in range((len(files))):
 #st.write(df)   
 
 
-st.header("Define your Business Rule")
-
-with st.expander("Business Condition"):
-    st.markdown("Criteria 2,3 and 4 if present only once in Title - High relevancy")
-    st.markdown("Criteria 2,3 and 4 if present more than once in abstract- High relevancy")
-    st.markdown("Criteria 2,3 and 4 if present only once in abstract- Medium relevancy")
-    st.markdown("Criteria 2,3 and 4 - Presence of keywords- irrespective once or more than once- Medium relevancy")
-    st.markdown("Criteria 2,3 and 5 if present more than once or once in abstract or title- medium relevancy") 
-    st.write("Criteria 5 Keywords to check : Point-Of-Care Ultrasonography","POCUS","Pocket ultrasound",
-                                              "Point of care ultrasound","Point-of-care ultrasound",
-                                              "Point Of Care Ultrasonography")
-    st.write("Lung Keywords : Focused lung ultrasonography in dyspnea","Lung & Cardiac Ultrasound",
-                                              "Lung and Cardiac Ultrasound","Lung and Cardiac Ultrasound (LuCUS)",
-                                              "Lung ultrasonograph","Lung ultrasonography","Lung ultrasound",
-                                              "Lung-cardiac-inferior vena cava (LCI) integrated ultrasound","LUS")
 if len(df)==0:
-        st.stop()
-else:     
+    st.stop()
+else:  
+    st.header("Define your Business Rule")
+
+    with st.expander("Business Condition"):
+        st.markdown("Criteria 2,3 and 4 if present only once in Title - High relevancy")
+        st.markdown("Criteria 2,3 and 4 if present more than once in abstract- High relevancy")
+        st.markdown("Criteria 2,3 and 4 if present only once in abstract- Medium relevancy")
+        st.markdown("Criteria 2,3 and 4 - Presence of keywords- irrespective once or more than once- Medium relevancy")
+        st.markdown("Criteria 2,3 and 5 if present more than once or once in abstract or title- medium relevancy") 
+        st.write("Criteria 5 Keywords to check : Point-Of-Care Ultrasonography","POCUS","Pocket ultrasound",
+                                                  "Point of care ultrasound","Point-of-care ultrasound",
+                                                  "Point Of Care Ultrasonography")
+        st.write("Lung Keywords : Focused lung ultrasonography in dyspnea","Lung & Cardiac Ultrasound",
+                                                  "Lung and Cardiac Ultrasound","Lung and Cardiac Ultrasound (LuCUS)",
+                                                  "Lung ultrasonograph","Lung ultrasonography","Lung ultrasound",
+                                                  "Lung-cardiac-inferior vena cava (LCI) integrated ultrasound","LUS")
+
     with st.form(key='my_form'):
       
         v5=st.multiselect('Select your criteria to consider',df.columns)  
@@ -175,48 +177,47 @@ else:
         submit_button = st.form_submit_button(label='Submit')  
 #v5=st.multiselect('Select your first criteria',df.columns)  
 #v5=st.multiselect('Select your seccond criteria',l5)   
+    if len(v5)==0:
+        st.stop()
+    else:    
+        Relevancy=[]
+        for i in range(len(df["PMID"])):
+            if df[v5[0]][i]==v1 and df[v5[1]][i]==v1 and df[v5[2]][i]==v1:
+                Relevancy.append("High")
+            elif df[v5[3]][i]>=v2 and df[v5[4]][i]>=v2 and df[v5[5]][i]>=v2:
+                Relevancy.append("High")
 
-if len(df)==0:
-    st.stop()
-else:    
-    Relevancy=[]
-    for i in range(len(df["PMID"])):
-        if df[v5[0]][i]==v1 and df[v5[1]][i]==v1 and df[v5[2]][i]==v1:
-            Relevancy.append("High")
-        elif df[v5[3]][i]>=v2 and df[v5[4]][i]>=v2 and df[v5[5]][i]>=v2:
-            Relevancy.append("High")
-
-        elif df[v5[3]][i]==v1 and df[v5[4]][i]==v1 and df[v5[5]][i]==v1:
-            Relevancy.append("Medium")
-        elif df[v5[3]][i]==v1 and df[v5[4]][i]>=v1 and df[v5[5]][i]>=v1:
-            Relevancy.append("Medium")
-        elif df[v5[3]][i]>=v1 and df[v5[4]][i]==v1 and df[v5[5]][i]>=v1:
-            Relevancy.append("Medium")
-        elif df[v5[3]][i]>=v1 and df[v5[4]][i]>=v1 and df[v5[5]][i]==v1:
-            Relevancy.append("Medium")  
-        elif df[v5[3]][i]>=v1 and df[v5[4]][i]>=v1 and (df[v5[6]][i] in v3 or df[v5[7]][i] in v3) and df[v5[7]][i] in v4:
-            Relevancy.append("Medium")    
-        else:
-            Relevancy.append("Low")
-
-
-    df['Relevancy']=Relevancy 
+            elif df[v5[3]][i]==v1 and df[v5[4]][i]==v1 and df[v5[5]][i]==v1:
+                Relevancy.append("Medium")
+            elif df[v5[3]][i]==v1 and df[v5[4]][i]>=v1 and df[v5[5]][i]>=v1:
+                Relevancy.append("Medium")
+            elif df[v5[3]][i]>=v1 and df[v5[4]][i]==v1 and df[v5[5]][i]>=v1:
+                Relevancy.append("Medium")
+            elif df[v5[3]][i]>=v1 and df[v5[4]][i]>=v1 and df[v5[5]][i]==v1:
+                Relevancy.append("Medium")  
+            elif df[v5[3]][i]>=v1 and df[v5[4]][i]>=v1 and (df[v5[6]][i] in v3 or df[v5[7]][i] in v3) and df[v5[8]][i] in v4:
+                Relevancy.append("Medium")    
+            else:
+                Relevancy.append("Low")
 
 
+        df['Relevancy']=Relevancy 
 
-    Indication=[]
-    for i in range(len(df["PMID"])):
-        if df["crt_words_T_1"][i] !='NA':
-            Indication.append(df["crt_words_T_1"][i])
-        elif df["crt_count_A_1"][i]==1:
-             Indication.append(dataset["crt_words_A_1"][i])
 
-        else:
-            Indication.append("NA")
 
-    df['Indication']=Indication   
+        Indication=[]
+        for i in range(len(df["PMID"])):
+            if df["crt_words_T_1"][i] !='NA':
+                Indication.append(df["crt_words_T_1"][i])
+            elif df["crt_count_A_1"][i]==1:
+                 Indication.append(dataset["crt_words_A_1"][i])
 
-    st.write(df)
+            else:
+                Indication.append("NA")
+
+        df['Indication']=Indication   
+
+        st.write(df)
 
     col1, col2 = st.columns(2)
 
