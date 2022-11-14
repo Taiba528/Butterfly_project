@@ -15,7 +15,7 @@ st.sidebar.image(image, width=200, clamp=False, channels="RGB", output_format="a
 
 def text_cleaning(x):
     try:
-        x= re.sub('[^\w\s]' ,"" ,x)
+        x= re.sub('[^\w\s]' ," " ,x)
         x= prep.clean(x)
         return x
     except:
@@ -51,13 +51,7 @@ def check_relevancy(crt):
     for i in range(len(crt)):
         if len(crt[i])<7:
                     words_crt.append(str(' '+crt[i]+' '))
-                    words_crt.append(str(' '+crt[i]+'.'))
-                    words_crt.append(str(' '+crt[i]+';'))
-                    words_crt.append(str(' '+crt[i]+':'))
-                    words_crt.append(str(' '+crt[i]+'-'))
-                    words_crt.append(str('('+crt[i]+')'))
-                    words_crt.append(str(' '+crt[i]+'?')) 
-                    words_crt.append(str(' '+crt[i]+'/')) 
+                     
         else:
                     words_crt.append(crt[i])
         
