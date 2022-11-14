@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import re
 
 
 header=st.container()
@@ -12,7 +13,13 @@ from PIL import Image
 image = Image.open('Indegene_Logo.png')
 st.sidebar.image(image, width=200, clamp=False, channels="RGB", output_format="auto")
 
-   
+def text_cleaning(x):
+    try:
+        x= re.sub('[^\w\s]' ,"" ,x)
+        x= prep.clean(x)
+        return x
+    except:
+        return x 
 
 #adding a file uploader
 
@@ -27,11 +34,14 @@ else:
     st.stop()    
 
 #st.header('Title')
+df1["Title"]=df1["Title"].apply(text_cleaning)
 Title=df1["Title"]
+#Title_new=Title.apply(text_cleaning)
 with st.expander("Title"):
     st.write(Title)
 
 #st.header('Abstract')
+df1["Abstractt_Text"]=df1["Abstractt_Text"].apply(text_cleaning)
 Abstract=df1["Abstractt_Text"]
 with st.expander("Abstract"):
     st.write(Abstract)
@@ -61,6 +71,7 @@ def check_relevancy(crt):
             for j in range(len(words_crt)):
                 if words_crt[j].lower() in Title[i].lower():
                     l1b_crt_count= l1b_crt_count+1
+                    #words_crt[j]=text_cleaning(words_crt[j])  
                     l1b_crt_word.append((words_crt[j]))
                     break
 
@@ -87,6 +98,7 @@ def check_relevancy(crt):
             for j in range(len(words_crt)):
                 if words_crt[j].lower() in Abstract[i].lower():
                     l2b_crt_count= l2b_crt_count+1
+                    # words_crt[j]=text_cleaning(words_crt[j])    
                     l2b_crt_word.append((words_crt[j]))
                     continue
 
@@ -119,9 +131,11 @@ for i in range((len(files))):
     df['crt_words_A_'+str(i+1)]=a[2]
     df['crt_count_A_'+str(i+1)]=a[3]  
 
+
+
 #st.header("Preprocessed Dataset")   
 #with st.expander("Preprocessed Dataset"):
-    #st.write(df)   
+#st.write(df)   
 
 
 st.header("Define your Business Rule")
@@ -139,30 +153,32 @@ with st.expander("Business Condition"):
                                               "Lung and Cardiac Ultrasound","Lung and Cardiac Ultrasound (LuCUS)",
                                               "Lung ultrasonograph","Lung ultrasonography","Lung ultrasound",
                                               "Lung-cardiac-inferior vena cava (LCI) integrated ultrasound","LUS")
-   
-with st.form(key='my_form'):
+if len(df)==0:
+        st.stop()
+else:     
+    with st.form(key='my_form'):
+      
+        v5=st.multiselect('Select your criteria to consider',df.columns)  
+        v1=st.number_input('Define a number for crt_word_count in title',min_value=1,step=1)
 
-    v5=st.multiselect('Select your criteria to consider',df.columns)  
-    v1=st.number_input('Define a number for crt_word_count in title',min_value=1,step=1)
+        v2=st.number_input('Define a number for crt_word_count in abstract',min_value=1,step=1)
+        l3= pd.read_excel(files[3])
+        l4= pd.read_excel(files[4])
 
-    v2=st.number_input('Define a number for crt_word_count in abstract',min_value=1,step=1)
-    l3= pd.read_excel(files[3])
-    l4= pd.read_excel(files[4])
+    #crt=list(data.iloc[:,0])
+            
+    #l3=(("Point-Of-Care Ultrasonography","POCUS","Pocket ultrasound",
+                                                  #"Point of care ultrasound","Point-of-care ultrasound","Point Of Care Ultrasonography"))
+    #l4=(("Lung Keywords : Focused lung ultrasonography in dyspnea","Lung & Cardiac Ultrasound",
+                                                  #"Lung and Cardiac Ultrasound","Lung and Cardiac Ultrasound (LuCUS)",
+                                                  #"Lung ultrasonograph","Lung ultrasonography","Lung ultrasound",
+                                                  #"Lung-cardiac-inferior vena cava (LCI) integrated ultrasound","LUS"))
 
-#crt=list(data.iloc[:,0])
-        
-#l3=(("Point-Of-Care Ultrasonography","POCUS","Pocket ultrasound",
-                                              #"Point of care ultrasound","Point-of-care ultrasound","Point Of Care Ultrasonography"))
-#l4=(("Lung Keywords : Focused lung ultrasonography in dyspnea","Lung & Cardiac Ultrasound",
-                                              #"Lung and Cardiac Ultrasound","Lung and Cardiac Ultrasound (LuCUS)",
-                                              #"Lung ultrasonograph","Lung ultrasonography","Lung ultrasound",
-                                              #"Lung-cardiac-inferior vena cava (LCI) integrated ultrasound","LUS"))
+        l5=['crt_count_T_1','crt_count_T_2','crt_count_T_3',"crt_count_T_4",'crt_count_T_5','crt_count_A_1',"crt_count_A_2","crt_count_A_3","crt_count_A_4","crt_count_A_5","crt_words_A_5"]
 
-    l5=['crt_count_T_1','crt_count_T_2','crt_count_T_3',"crt_count_T_4",'crt_count_T_5','crt_count_A_1',"crt_count_A_2","crt_count_A_3","crt_count_A_4","crt_count_A_5","crt_words_A_5"]
-
-    v3=st.multiselect('Define Criteria 5 keywords to check',l4)  
-    v4=st.multiselect('Define the specific word to check',l3) 
-    submit_button = st.form_submit_button(label='Submit')  
+        v3=st.multiselect('Define Criteria 5 keywords to check',l4)  
+        v4=st.text_input('Define the specific word to check') 
+        submit_button = st.form_submit_button(label='Submit')  
 #v5=st.multiselect('Select your first criteria',df.columns)  
 #v5=st.multiselect('Select your seccond criteria',l5)   
 
