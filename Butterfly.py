@@ -74,7 +74,7 @@ def check_relevancy(crt):
             l1a_crt_flag.append(l1b_crt_count)
 
         except:
-            l1a_crt_word.append(('Title not available', 'NA'))
+            l1a_crt_word.append('Title not available')
             l1a_crt_flag.append(0)
 
     
@@ -101,7 +101,7 @@ def check_relevancy(crt):
             l2a_crt_flag.append(l2b_crt_count)
 
         except:
-            l2a_crt_word.append(('Abstract not available', 'NA'))
+            l2a_crt_word.append('Abstract not available')
             l2a_crt_flag.append(0)
 
        
