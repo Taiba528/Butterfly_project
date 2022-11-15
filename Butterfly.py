@@ -139,18 +139,15 @@ else:
     st.header("Define your Business Rule")
 
     with st.expander("Business Condition"):
-        st.markdown("Criteria 2,3 and 4 if present only once in Title - High relevancy")
-        st.markdown("Criteria 2,3 and 4 if present more than once in abstract- High relevancy")
-        st.markdown("Criteria 2,3 and 4 if present only once in abstract- Medium relevancy")
-        st.markdown("Criteria 2,3 and 4 - Presence of keywords- irrespective once or more than once- Medium relevancy")
-        st.markdown("Criteria 2,3 and 5 if present more than once or once in abstract or title- medium relevancy") 
-        st.write("Criteria 5 Keywords to check : Point-Of-Care Ultrasonography","POCUS","Pocket ultrasound",
+        st.markdown("1.1 Criteria 2,3 and 4 if present only once in Title - High relevancy")
+        st.markdown("1.2 Criteria 2,3 and 4 if present more than once in abstract- High relevancy")
+        st.markdown("2.1 Criteria 2,3 and 4 if present only once in abstract- Medium relevancy")
+        st.markdown("2.2 Criteria 2,3 and 4 if present once or more than once- Medium relevancy")
+        st.markdown("2.3 Criteria 2,3 and 5 if present more than once or once in abstract or title- medium relevancy") 
+        st.write("2.3.1 Criteria 5 Keywords to check : Point-Of-Care Ultrasonography","POCUS","Pocket ultrasound",
                                                   "Point of care ultrasound","Point-of-care ultrasound",
                                                   "Point Of Care Ultrasonography")
-        st.write("Lung Keywords : Focused lung ultrasonography in dyspnea","Lung & Cardiac Ultrasound",
-                                                  "Lung and Cardiac Ultrasound","Lung and Cardiac Ultrasound (LuCUS)",
-                                                  "Lung ultrasonograph","Lung ultrasonography","Lung ultrasound",
-                                                  "Lung-cardiac-inferior vena cava (LCI) integrated ultrasound","LUS")
+        st.write("2.3.2 Presence of lung Keywords to check in Title and abstract in addition to criteria 5 keywords as mentioned above")
 
     with st.form(key='my_form'):
       
