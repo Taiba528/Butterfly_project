@@ -6,7 +6,7 @@ import re
 header=st.container()
 with header:
     st.title('Text Analytics App')
-    st.markdown("******Publicatin Tagging******")
+    #st.markdown("******Publicatin Tagging******")
 
 from PIL import Image
 
@@ -23,7 +23,7 @@ def text_cleaning(x):
 
 #adding a file uploader
 
-st.header('Publication list')
+st.header('Publication Tagging')
 file1 = st.file_uploader("Please upload your publication list here",type=["xlsx"])
 
 if file1 is not None:
