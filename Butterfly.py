@@ -5,8 +5,8 @@ import re
 
 header=st.container()
 with header:
-    st.title('Butterfly App')
-    st.markdown("******OBJECTIVE : To get the most Relevant publications with respect to some pre-defined Keywords and Business conditions******")
+    st.title('Text Analytics App')
+    st.markdown("******Publicatin Tagging******")
 
 from PIL import Image
 
@@ -28,7 +28,7 @@ file1 = st.file_uploader("Please upload your publication list here",type=["xlsx"
 
 if file1 is not None:
     df1= pd.read_excel(file1)
-    df=df1[['PMID','Title','Abstract']]
+    df=df1[['Sl No','PMID','Link','Title','Abstract']]
     st.write(df1.head())
 else:
     st.stop()    
