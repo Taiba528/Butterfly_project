@@ -202,17 +202,17 @@ else:
 
 
 
-        Indication=[]
-        for i in range(len(df["PMID"])):
-            if df["crt_words_T_1"][i] !='NA':
-                Indication.append(df["crt_words_T_1"][i])
-            elif df["crt_count_A_1"][i]==1:
-                 Indication.append(dataset["crt_words_A_1"][i])
+#         Indication=[]
+#         for i in range(len(df["PMID"])):
+#             if df["crt_words_T_1"][i] !='NA':
+#                 Indication.append(df["crt_words_T_1"][i])
+#             elif df["crt_count_A_1"][i]==1:
+#                  Indication.append(dataset["crt_words_A_1"][i])
 
-            else:
-                Indication.append("NA")
+#             else:
+#                 Indication.append("NA")
 
-        df['Indication']=Indication   
+#         df['Indication']=Indication   
 
         st.write(df)
 
